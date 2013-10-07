@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <wchar.h>
 #include "hidapi.h"
+#include <string.h>
 
 // Headers needed for sleeping.
 #ifdef _WIN32
@@ -34,6 +35,7 @@
 #define COLOR_BLUE							0x06
 #define COLOR_PURPLE						0x07
 #define COLOR_WHITE							0x08
+#define UCHAR_MAX						0x00
 
 /** Level constants. High is more intense light */
 #define LEVEL_1								0x00

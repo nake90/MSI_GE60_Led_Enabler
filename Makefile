@@ -14,7 +14,7 @@ COBJS=hid.o
 CPPOBJS=msiledenabler.o
 OBJS=$(COBJS) $(CPPOBJS)
 CFLAGS+=-Ihidapi -Wall -g -c 
-LIBS=-framework IOKit -framework CoreFoundation
+LIBS=-ludev
 
 
 msiledenabler: $(OBJS)
