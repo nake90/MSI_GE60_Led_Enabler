@@ -11,7 +11,7 @@ How to compile:
 
 It's simple firs tclone the repository with 
 
-$ git clone https://github.com/nake90/MSI_GT_GE_Led_Enabler
+$ git clone https://github.com/nake90/MSI_GE60_Led_Enabler
 
 Edit msiledenabler.cpp (I just created a sample code)
 
