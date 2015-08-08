@@ -4,17 +4,21 @@
 # Alan Ott
 # Signal 11 Software
 # 2010-07-03
+#
+# Alfonso Arbona Gimeno
+# 2015-08-08
+# hidapi linked externally via pkg-config
 ###########################################
 
 all: msiledenabler
 
 CC=gcc
 CXX=g++
-COBJS=hid.o
+COBJS=
 CPPOBJS=msiledenabler.o
 OBJS=$(COBJS) $(CPPOBJS)
-CFLAGS+=-Ihidapi -Wall -g -c 
-LIBS=-ludev
+CFLAGS+=`pkg-config --cflags hidapi-libusb` -Wall -g -c
+LIBS=-ludev `pkg-config --libs hidapi-libusb`
 
 
 msiledenabler: $(OBJS)
