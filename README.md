@@ -1,45 +1,26 @@
-MSI Led Enabler
+MSI GE60 Apache Pro
 =====================
 
 This is a modded code of PaNaVTEC's MSI_GT_GE_Led_Enabler to compile in Linux Debian.
+
+And edited by nake (Alfonso Arbona Gimeno) to work with MSI GE60 in Debian, adding
+also new features stolen from https://github.com/Wufe/msi-keyboard
 
 How to compile:
 ===============
 
 It's simple firs tclone the repository with 
 
-$ git clone https://github.com/gokuhs/MSI_GT_GE_Led_Enabler
+$ git clone https://github.com/nake90/MSI_GT_GE_Led_Enabler
+
+Edit msiledenabler.cpp (I just created a sample code)
 
 Now in a terminal type:
 
 $ make
+$ sudo ./msiledenabler
 
-How to use:
-===========
-
-This program uses 4 arguments:
-
-1º Mode:
-
-- Gaming: Only turn on the left leds
-- Normal: Turn all leds on
-
-2º Color Area 1:
-- Sets the color of the area 1 of the keyboard * (see supported color modes)
-
-3º Color Area 2:
-- Sets the color of the area 2 of the keyboard * (see supported color modes)
-
-4º Color Area 3:
-- Sets the color of the area 3 of the keyboard * (see supported color modes)
-
-5º Light level:
-- Establish the intensity level of the leds
-
-
-Example of use:
-
-sudo ./msiledenabler -mode normal -color1 blue -color2 green -color3 red -level 3
+Remember that you need root access!
 
 
 Original text
