@@ -179,7 +179,7 @@ int main(int argc, char* argv[])
 		r = 0;
 		g = 0xFF;
 		b = CLAMP(0, 0xFF * cpu_percent, 0xFF);
-		printf("CPU: %.2f\n", cpu_percent * 100.0);
+		//printf("CPU: %.2f\n", cpu_percent * 100.0);
 		
 		sendActivateArea(handle, AREA_MIDDLE, r, g, b);
 		sendActivateArea(handle, AREA_RIGHT, 0x00, 0x00, 0xFF);
