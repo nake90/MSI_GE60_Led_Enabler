@@ -20,6 +20,7 @@
 #define SUBDEV_ID 0 // Check the code (main loop) to select yours.
 #define TEMP_LOW 30.0 // Temperature to be considered normal (below it's full green)
 #define TEMP_HIGH 90.0 // Temperature to be considered high (higher means full red)
+#define NUMBER_CPUS 4 // Number of processors in the system (see /proc/cpuinfo if you don't know)
 
 /** Area constants */
 #define AREA_LEFT							0x01
@@ -107,7 +108,8 @@ int main(int argc, char* argv[])
 	const sensors_chip_name *chip;
 	const sensors_feature *feature;
 	int nr, subfeat_nr;
-	double temp, used_temp;
+	double temp, used_temp, cpu_percent;
+	FILE *cpufile;
 	
 	// Open the sensors
 	if(sensors_init(NULL) != 0)
@@ -163,7 +165,23 @@ int main(int argc, char* argv[])
 		
 		commit(handle, MODE_NORMAL); // You have to commit first in GE60 (?)
 		sendActivateArea(handle, AREA_LEFT, r, g, b);
-		sendActivateArea(handle, AREA_MIDDLE, 0x00, 0xFF, 0x00);
+		
+		// Get CPU info
+
+		cpu_percent = 0.0;
+		cpufile = fopen("/proc/loadavg", "r");
+		if(cpufile)
+		{
+			fscanf(cpufile, "%lf", &cpu_percent);
+			fclose(cpufile);
+		}
+		cpu_percent /= NUMBER_CPUS;
+		r = 0;
+		g = 0xFF;
+		b = CLAMP(0, 0xFF * cpu_percent, 0xFF);
+		printf("CPU: %.2f\n", cpu_percent * 100.0);
+		
+		sendActivateArea(handle, AREA_MIDDLE, r, g, b);
 		sendActivateArea(handle, AREA_RIGHT, 0x00, 0x00, 0xFF);
 
 		tms.tv_sec = REFRESH_INTERVAL;
