@@ -11,28 +11,30 @@ How to compile:
 ===============
 
 Install dependences (as root):
-apt-get install libhidapi-dev libudev-dev
+`apt-get install libhidapi-dev libudev-dev`
 
 And for the sensors sample install also:
-apt-get install libsensors
+`apt-get install libsensors`
 
 It's simple first clone the repository with 
 
-$ git clone https://github.com/nake90/MSI_GE60_Led_Enabler
+`$ git clone https://github.com/nake90/MSI_GE60_Led_Enabler`
 
-Edit msiledenabler.cpp (I just created a sample code)
+Edit *msiledenabler.cpp* (I just created a sample code)
 
 Now in a terminal type:
 
+```
 $ make
 $ sudo ./msiledenabler
+```
 
-Remember that you need root access!
+Remember that **you need root access**!
 
 Use of sensors_sample:
 ======================
 
-First edit sensors_sample.cpp
+First edit *sensors_sample.cpp*
 
 There are a few defines that you need to map to your system and preferences.
 DEVICE_ID and SUBDEV_ID define which sensor to use. If you don't know which one
@@ -40,26 +42,31 @@ you should use, uncomment the printf's in the main loop and use that ID.
 
 For example, in my system I have the following sensors:
 
+```
 temp1 [0,0]  = 27.80ºC
 temp2 [0,1]  = 105.00ºC
 temp3 [0,2]  = 29.80ºC
 Physical id 0 [1,0]  = 52.00ºC
 Core 0 [1,1]  = 84.00ºC
 Core 1 [1,2]  = 100.00ºC
+```
 
-And I want to use Physical id 0, so I defined DEVICE_ID to 1 and SUBDEV_ID to 0.
+And I want to use *Physical id 0*, so I defined DEVICE_ID to 1 and SUBDEV_ID to 0.
 
 The color of the left block will be updated every REFRESH_INTERVAL seconds to
 completely red if the temperature is above TEMP_HIGH, completely green if it's
 below TEMP_LOW. Fading if the temperature is between those two values.
 
 Then:
-$ make sensors_sample
+
+`$ make sensors_sample`
+
 And (as root):
-# ./sensors_sample
+
+`# ./sensors_sample`
 
 
-To close the program send a INT signal (control-c).
+To close the program send a INT signal (Control-C).
 
 
 Original text
