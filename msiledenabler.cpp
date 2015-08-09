@@ -82,8 +82,7 @@ commit(hid_device *handle, unsigned char mode) {
 int 
 main(int argc, char* argv[]) {
 	hid_device *handle;
-	char r;
-	int i;
+	unsigned char r;
 	struct timespec tms;
 
 	// Ready to open lights
@@ -95,15 +94,14 @@ main(int argc, char* argv[]) {
 	}
 	
 	// Sample. Edit this
-	for(i = 0; i < 255; i+=8)
+	for(r = 0; r < 255 - 8; r+=8)
 	{
-	  r = (unsigned char)i;
 	  commit(handle, MODE_NORMAL);
 	  sendActivateArea(handle, AREA_LEFT, r, 0x00, 0x00);
 	  sendActivateArea(handle, AREA_MIDDLE, r, 0xFF, 0x00);
 	  sendActivateArea(handle, AREA_RIGHT, 0x00, 0x00, 0xFF);
 	  
-	  printf("r = %d\n", i);
+	  printf("r = %d\n", r);
 	  
 	  tms.tv_sec = 0;
 	  tms.tv_nsec = 500* 1000 * 1000; // 500ms
