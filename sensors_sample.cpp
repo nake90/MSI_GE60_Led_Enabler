@@ -15,7 +15,7 @@
 #include <signal.h>
 #include <sensors/sensors.h>
 
-#define REFRESH_INTERVAL 15 // Time in seconds
+#define REFRESH_INTERVAL 10 // Time in seconds
 #define DEVICE_ID 1 // Device and subdevice from where to take the temperature.
 #define SUBDEV_ID 0 // Check the code (main loop) to select yours.
 #define TEMP_LOW 30.0 // Temperature to be considered normal (below it's full green)
@@ -84,6 +84,37 @@ void commit(hid_device *handle, unsigned char mode)
 		printf("Unable to send a feature report.\n");
 	}
 
+}
+
+float get_ram_free(void)
+{
+	char buffer[1024];
+	char *ptr;
+	unsigned long mem = 0, free = 0;
+	FILE *f = fopen("/proc/meminfo", "r");
+	if(!f)return 0.0f;
+
+	while(fgets(buffer, 1024, f) != NULL)
+	{
+		if(strncmp(buffer, "MemTotal:", 9) == 0)
+		{
+			ptr = buffer + 10;
+			mem = atol(ptr);
+		}
+
+		if(strncmp(buffer, "MemFree:", 8) == 0)
+		{
+			ptr = buffer + 9;
+			free = atol(ptr);
+		}
+	}
+
+	fclose(f);
+
+	//printf("mem: %ld, free: %ld\n", mem, free);
+
+	if(mem <= 0 || free < 0) return 0.0;
+	return (float)free / (float)mem;
 }
 
 void signal_callback_handler(int signum)
@@ -182,7 +213,14 @@ int main(int argc, char* argv[])
 		//printf("CPU: %.2f\n", cpu_percent * 100.0);
 		
 		sendActivateArea(handle, AREA_MIDDLE, r, g, b);
-		sendActivateArea(handle, AREA_RIGHT, 0x00, 0x00, 0xFF);
+		
+		// Get RAM info
+		
+		b = CLAMP(0, 0xFF * get_ram_free(), 0xFF);
+		r = 0xFF - b;
+		g = 0;
+		
+		sendActivateArea(handle, AREA_RIGHT, r, g, b);
 
 		tms.tv_sec = REFRESH_INTERVAL;
 		tms.tv_nsec = 0;
