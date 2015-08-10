@@ -7,6 +7,9 @@ And edited by nake (Alfonso Arbona Gimeno) to work with MSI GE60 in Debian, addi
 also new features stolen from https://github.com/Wufe/msi-keyboard
 Forked from https://github.com/gokuhs/MSI_GT_GE_Led_Enabler
 
+There is also a sample program that automatically updates the color of the keyboard
+deppending on the temperature, cpu usage and ram usage.
+
 How to compile:
 ===============
 
@@ -56,6 +59,9 @@ And I want to use *Physical id 0*, so I defined DEVICE_ID to 1 and SUBDEV_ID to 
 The color of the left block will be updated every REFRESH_INTERVAL seconds to
 completely red if the temperature is above TEMP_HIGH, completely green if it's
 below TEMP_LOW. Fading if the temperature is between those two values.
+
+The center block deppends on the CPU usage (the green value is always at max and the blue follows the CPU).
+The right block goes from blue (0% RAM usage) to red (100% RAM usage).
 
 Then:
 
