@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
 	const sensors_chip_name *chip;
 	const sensors_feature *feature;
 	int nr, subfeat_nr;
-	double temp, used_temp, cpu_percent;
+	double temp, used_temp, cpu_percent, ram_free_percent;
 	FILE *cpufile;
 	
 	// Open the sensors
@@ -215,8 +215,11 @@ int main(int argc, char* argv[])
 		sendActivateArea(handle, AREA_MIDDLE, r, g, b);
 		
 		// Get RAM info
-		
-		b = CLAMP(0, 0xFF * get_ram_free(), 0xFF);
+		ram_free_percent = get_ram_free();
+
+		//printf("RAM: %.2lf\n", ram_used_percent);
+
+		b = CLAMP(0, 0xFF * ram_free_percent, 0xFF);
 		r = 0xFF - b;
 		g = 0;
 		
