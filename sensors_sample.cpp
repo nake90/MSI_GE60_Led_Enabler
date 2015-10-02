@@ -90,7 +90,7 @@ float get_ram_free(void)
 {
 	char buffer[1024];
 	char *ptr;
-	unsigned long mem = 0, free = 0;
+	unsigned long mem = 0, mfree = 0;
 	FILE *f = fopen("/proc/meminfo", "r");
 	if(!f)return 0.0f;
 
@@ -105,16 +105,16 @@ float get_ram_free(void)
 		if(strncmp(buffer, "MemFree:", 8) == 0)
 		{
 			ptr = buffer + 9;
-			free = atol(ptr);
+			mfree = atol(ptr);
 		}
 	}
 
 	fclose(f);
 
-	//printf("mem: %ld, free: %ld\n", mem, free);
+	//printf("mem: %ld, mfree: %ld\n", mem, mfree);
 
-	if(mem <= 0 || free < 0) return 0.0;
-	return (float)free / (float)mem;
+	if(mem <= 0 || mfree < 0) return 0.0;
+	return (float)mfree / (float)mem;
 }
 
 void signal_callback_handler(int signum)
